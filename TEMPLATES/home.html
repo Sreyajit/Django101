@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-5 p-5 mx-auto">
+        {% for post in posts %}
+            <div class="col">
+                <div class="card">
+                    {% thumbnail post.image "200x200" crop="center" as im %}
+                        <img src="{{ im.url }}" class="card-img-top">
+                    {% endthumbnail %}
+                    <div class="card-body">
+                        <p class="card-text">{{ post.text }}</p>
+                        <a href="{% url 'myApp:detail' post.id %}" class="btn btn-outline-info">View Full Image</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="container-fluid align-self-center pt-5 mt-5">
+                <h3>Welcome!</h3>
+                <p>Add your first image?</p>
+                <a href="{% url 'myApp:post' %}" class="btn btn-lg btn-outline-success">Upload Image</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
